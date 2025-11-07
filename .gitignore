@@ -1,4 +1,4 @@
-# Compiled class file
+# Compiled class files
 *.class
 *.jar
 *.war
@@ -9,6 +9,7 @@ target/
 build/
 out/
 bin/
+dist/
 
 # IDE files
 .idea/
@@ -27,7 +28,7 @@ Thumbs.db
 *.log
 logs/
 
-# Database files  
+# Database files
 *.fdb
 *.fdb.lock
 
