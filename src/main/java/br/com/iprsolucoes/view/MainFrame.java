@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
     }
 
     private void initializeUI() {
-        setTitle("STF - Sistema de transferencia Firebird");
+        setTitle("STF - Sistema de Transferencia Firebird");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(800, 600);
