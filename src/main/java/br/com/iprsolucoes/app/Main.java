@@ -1,4 +1,4 @@
-package br.com.iprsolucoes;
+package br.com.iprsolucoes.app;
 
 import br.com.iprsolucoes.view.MainFrame;
 import javax.swing.*;

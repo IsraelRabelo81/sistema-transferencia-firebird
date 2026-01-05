@@ -4,67 +4,52 @@ import java.io.*;
 import java.util.Properties;
 
 public class DatabaseConfig {
-    private Properties properties;
-    private final String CONFIG_FILE = "database.properties";
-    
+    private static final String CONFIG_FILE = System.getProperty("user.dir") + File.separator + "config" + File.separator
+            + "database.properties";
+    private final Properties properties = new Properties();
+
     public DatabaseConfig() {
-        properties = new Properties();
         loadConfig();
     }
 
     private void loadConfig() {
-        try(InputStream input = new FileInputStream(CONFIG_FILE)){
+        try (InputStream input = new FileInputStream(CONFIG_FILE)) {
             properties.load(input);
-            
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             createDefaultConfig();
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao carregar database.properties", e);
         }
     }
 
     private void createDefaultConfig() {
-        properties.setProperty("source.url", "jdbc:firebirdsql://localhost:3050/C:/source.fdb");
-        properties.setProperty("source.user", "sysdba");
-        properties.setProperty("source.password", "masterkey");
+        new File("config").mkdirs();
 
-        properties.setProperty("target.url", "jdbc:firebirdsql://localhost:3050/C:/target.fdb");
-        properties.setProperty("target.user", "sysdba");
-        properties.setProperty("target.password", "masterkey");
+        properties.setProperty("firebird.url", "jdbc:firebirdsql://localhost:3050/C:/source.fdb");
+        properties.setProperty("firebird.user", "sysdba");
+        properties.setProperty("firebird.password", "masterkey");
 
         saveConfig();
 
     }
 
     private void saveConfig() {
-        try(OutputStream output = new FileOutputStream(CONFIG_FILE)) {
-            properties.store(output, "Database Configuration");
+        try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
+            properties.store(output, "Firebird Configuration");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao salvar database.properties", e);
         }
     }
 
-    public String getSourceUrl() {
-        return properties.getProperty("source.url");
+    public String getUrl() {
+        return properties.getProperty("firebird.url");
     }
 
-    public String getSourceUser() {
-        return properties.getProperty("source.user");
+    public String getUser() {
+        return properties.getProperty("firebird.user");
     }
 
-    public String getSourcePassword() {
-        return properties.getProperty("source.password");
+    public String getPassword() {
+        return properties.getProperty("firebird.password");
     }
-
-
-    public String getTargetUrl() {
-        return properties.getProperty("target.url");
-    }
-
-    public String getTargetUser() {
-        return properties.getProperty("target.user");
-    }
-
-    public String getTargetPassword() {
-        return properties.getProperty("tagert.password");
-    }
-
 }
